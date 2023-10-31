@@ -80,6 +80,11 @@
                       <td><?=$descricao?></td>
                       <td><?=$statusNome?></td>
                       <td>
+                      <form name ='formstatus' method='post' id='formstatus'>
+                        <input class='form-control' type='hidden' name='id' id='id' value='<?=$id;?>'>
+                        <input class='form-control' type='hidden' name='status' id='status' value='<?=$status;?>'>
+                        <input class='form-control' type='hidden' name='acao' id='acao' value='status'>
+                        </form>
                         <form name ='form<?=$id;?>' method='post' id='form<?=$id;?>'>
                         <input class='form-control' type='hidden' name='id' id='id' value='<?=$id;?>'>
                         <input class='form-control' type='hidden' name='status' id='status' value='<?=$status;?>'>
@@ -143,30 +148,25 @@
 
   <script type="text/javascript">
 
-    function excluirCategoria(id, forcada = null){
-        alert(id);
-        if(forcada = null){
-            url = "categoriaControl.php";
-        }else{
-            url = "categoriaControl.php";
-        }
+    function excluirCategoria(id){
         acao = document.getElementById('acao').value = 'excluir';
         const formulario = document.querySelector('#form'+id);
         var dados = jQuery(formulario).serialize();
         jQuery.ajax({
         type: "POST",
-        url: ,
+        url: "categoriaControl.php",
         data: dados,
         success: function( data )
         {
           alert('Categoria excluída com sucesso');
+          window.location.reload();
         }
       });
     }
-    function atvDstvCategoria(id){
+    function atvDstvCategoria(){
         acao = document.getElementById('acao').value = 'status';
 
-        const formulario = document.querySelector('#form'+id);
+        const formulario = document.querySelector('#formstatus');
 
         var dados = jQuery(formulario).serialize();
         jQuery.ajax({
@@ -175,7 +175,7 @@
         data: dados,
         success: function( data )
         {
-          alert('status alterado');
+          alert("status alterado");
           window.location.reload();
         }
       });
